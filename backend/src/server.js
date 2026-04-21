@@ -71,6 +71,15 @@ app.delete('/crpms/service/:id', (req, res)=>{
             
     })
 })
+
+app.get('/report', (req, res)=>{
+    const sql = "SELECT u.name, p.service_id, s.servicename, p.price, p.date FROM users u INNER JOIN payment p ON u.id = p.user_id INNER JOIN services s ON s.servicecode=p.service_id ";
+    db.query(sql, (err, result)=>{
+        if(err) throw err
+        res.status(200).json(result)
+    })
+})
+
 app.listen(port, ()=>{
     console.log(`serv is running on port ${port}`)
 })
